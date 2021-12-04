@@ -78,7 +78,12 @@ const resetDockerandDeploy = () => {
 }
 
 app.get('/', (req, res) => {
-  res.send('<button>coucou</button>')
+  res.send('<h3>Use path /reloadServerWithLastVersion to update server</h3>')
+})
+
+app.get('/reloadServerWithLastVersion', (req, res) => {
+  resetDockerandDeploy()
+  res.send('server reloaded successfully :)')
 })
 
 app.listen(port, () => {
