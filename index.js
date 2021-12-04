@@ -19,9 +19,28 @@ const killContainer = (req, res, next) => {
   })
 }
 
+const removeContainer = (req, res, next) => {
+    exec('docker ps -a -q', (error, stdout, stderr) => {
+      if (error) console.log(`error : ${error.message}`)
+      if (stderr) console.log(`stderr : ${stderr}`)
+      if (stdout) {
+        exec('docker rm $(docker ps -a -q)', (error, stdout, stderr) => {
+          if (error) console.log(`error : ${error.message}`)
+          if (stderr) console.log(`stderr : ${stderr}`)
+          if (stdout) next()
+        })
+      } else {
+        next()
+      }
+    })
+  }
+
 app.get('/', (req, res) => {
   killContainer(req, res, () => {
     console.log('docker kill ok !')
+  })
+  removeContainer(req, res, () => {
+    console.log('docker remove ok !')
   })
 })
 
