@@ -35,11 +35,30 @@ const removeContainer = (req, res, next) => {
   })
 }
 
+const removeImage = (req, res, next) => {
+  exec('docker images -q', (error, stdout, stderr) => {
+    if (error) console.log(`error : ${error.message}`)
+    if (stderr) console.log(`stderr : ${stderr}`)
+    if (stdout) {
+      exec('docker rmi $(docker images -q)', (error, stdout, stderr) => {
+        if (error) console.log(`error : ${error.message}`)
+        if (stderr) console.log(`stderr : ${stderr}`)
+        if (stdout) next()
+      })
+    } else {
+      next()
+    }
+  })
+}
+
 app.get('/', (req, res) => {
   killContainer(req, res, () => {
     console.log('docker kill ok !')
     removeContainer(req, res, () => {
       console.log('docker remove ok !')
+      removeImage(req, res, () => {
+        console.log('docker remove ok !')
+      })
     })
   })
 })
