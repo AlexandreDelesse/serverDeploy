@@ -53,7 +53,7 @@ const removeImage = (req, res, next) => {
 
 const deploy = (req, res, next) => {
   exec(
-    'docker run -p 5001:5001 168078252309.dkr.ecr.eu-west-3.amazonaws.com/hakuna-api:latest',
+    'docker run -d -p 5001:5001 168078252309.dkr.ecr.eu-west-3.amazonaws.com/hakuna-api:latest',
     (error, stdout, stderr) => {
       if (error) console.log(`error : ${error.message}`)
       if (stderr) console.log(`stderr : ${stderr}`)
