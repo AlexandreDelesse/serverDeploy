@@ -78,7 +78,7 @@ const resetDockerandDeploy = () => {
 }
 
 app.get('/', (req, res) => {
-  res.send('<div>coucou</div>')
+  res.send('<button>coucou</button>')
 })
 
 app.listen(port, () => {
