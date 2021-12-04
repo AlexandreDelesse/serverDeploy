@@ -13,8 +13,8 @@ const cleanDocker = (req, res) => {
 
 app.get('/', (req, res) => {
   exec('sh deploy.sh', (error, stdout, stderr) => {
-    if (error) res.send(`error : ${error.message}`)
-    if (stderr) res.send(`stderr : ${stderr}`)
+    if (error) console.log(`error : ${error.message}`)
+    if (stderr) console.log(`stderr : ${stderr}`)
     res.send(`stdout ${stdout}`)
   })
 })
