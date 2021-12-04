@@ -15,7 +15,11 @@ app.get('/', (req, res) => {
   exec('docker ps -q', (error, stdout, stderr) => {
     if (error) res.send(`error : ${error.message}`)
     if (stderr) res.send(`stderr : ${stderr}`)
-    res.send(`stdout ${stdout}`)
+    if (stdout) {
+      res.send(`stdout ${stdout}`)
+    } else {
+      res.send('toto')
+    }
   })
 })
 
