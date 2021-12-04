@@ -62,7 +62,7 @@ const deploy = (req, res, next) => {
   )
 }
 
-app.get('/', (req, res) => {
+const resetDockerandDeploy = () => {
   killContainer(req, res, () => {
     console.log('docker kill ok !')
     removeContainer(req, res, () => {
@@ -75,6 +75,10 @@ app.get('/', (req, res) => {
       })
     })
   })
+}
+
+app.get('/', (req, res) => {
+  res.send(<div>coucou</div>)
 })
 
 app.listen(port, () => {
