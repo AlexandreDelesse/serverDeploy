@@ -12,11 +12,11 @@ const cleanDocker = (req, res) => {
 }
 
 app.get('/', (req, res) => {
-  ;(error, stdout, stderr) => {
+  exec('docker ps -q', (error, stdout, stderr) => {
     if (error) res.send(`error : ${error.message}`)
     if (stderr) res.send(`stderr : ${stderr}`)
     res.send(`stdout ${stdout}`)
-  }
+  })
 })
 
 app.listen(port, () => {
