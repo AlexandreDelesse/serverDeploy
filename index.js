@@ -82,7 +82,7 @@ const deploy = (req, res, next) => {
 
 app.get('/', (req, res) => {
   const now = Date.now()
-  const startSince = new Date(now - startTime).toLocaleTimeString()
+  const startSince = new Date(now - startTime).toLocaleString()
   res.send(
     `<h3>server is up since ${startSince} ! Use path /reloadServerWithLastVersion to update server</h3>`,
   )
