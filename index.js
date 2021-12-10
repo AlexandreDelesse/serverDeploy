@@ -4,7 +4,7 @@ const { start } = require('repl')
 const app = express()
 const port = 3000
 
-const startTime = new Date.now()
+const startTime = Date.now()
 
 const awsLogin = (req, res, next) => {
   exec(
@@ -81,7 +81,7 @@ const deploy = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-  const now = new Date.now()
+  const now = Date.now()
   const startSince = new Date(now - startTime).getTime()
   res.send(
     `<h3>server is up since ${startSince} ! Use path /reloadServerWithLastVersion to update server</h3>`,
