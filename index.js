@@ -2,6 +2,20 @@ const express = require('express')
 const { exec } = require('child_process')
 const app = express()
 const port = 3000
+const awsLogin = (req, res, next) => {
+  exec(
+    'aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 168078252309.dkr.ecr.eu-west-3.amazonaws.com',
+    (error, stdout, stderr) => {
+      if (error) console.log(`error : ${error.message}`)
+      if (stderr) console.log(`stderr : ${stderr}`)
+      if (stdout) {
+        next()
+      } else {
+        next()
+      }
+    },
+  )
+}
 
 const killContainer = (req, res, next) => {
   exec('docker ps -q', (error, stdout, stderr) => {
@@ -63,18 +77,23 @@ const deploy = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-  res.send('<h3>server is up ! Use path /reloadServerWithLastVersion to update server</h3>')
+  res.send(
+    '<h3>server is up ! Use path /reloadServerWithLastVersion to update server</h3>',
+  )
 })
 
 app.get('/reloadServerWithLastVersion', (req, res) => {
-  killContainer(req, res, () => {
-    console.log('docker kill ok !')
-    removeContainer(req, res, () => {
-      console.log('docker remove ok !')
-      removeImage(req, res, () => {
-        console.log('docker remove images ok !')
-        deploy(req, res, () => {
-          console.log('docker deploy ok !')
+  awsLogin(req, res, () => {
+    console.log('docker deploy ok !')
+    killContainer(req, res, () => {
+      console.log('docker kill ok !')
+      removeContainer(req, res, () => {
+        console.log('docker remove ok !')
+        removeImage(req, res, () => {
+          console.log('docker remove images ok !')
+          deploy(req, res, () => {
+            console.log('docker deploy ok !')
+          })
         })
       })
     })
