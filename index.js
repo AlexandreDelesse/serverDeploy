@@ -63,7 +63,7 @@ const deploy = (req, res, next) => {
 }
 
 app.get('/', (req, res) => {
-  res.send('<h3>Use path /reloadServerWithLastVersion to update server</h3>')
+  res.send('<h3>server is up ! Use path /reloadServerWithLastVersion to update server</h3>')
 })
 
 app.get('/reloadServerWithLastVersion', (req, res) => {
